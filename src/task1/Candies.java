@@ -1,3 +1,4 @@
+package task1;
 public abstract class Candies {
     private String name;
     private int weight;

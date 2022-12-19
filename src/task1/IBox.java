@@ -1,3 +1,4 @@
+package task1;
 public interface IBox {
     void addCandy(Candies candy);
     void deleteLastCandy();
