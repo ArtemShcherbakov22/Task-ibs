@@ -5,5 +5,9 @@ public interface IBox {
     int getWeight();
     double getPrice();
     String getInfo();
-
+    void reduceWeight(double weight);
+    void reducePrice(double price);
+    //void prepareGift();
+    int getAllWeight();
+    double getAllPrice();
 }

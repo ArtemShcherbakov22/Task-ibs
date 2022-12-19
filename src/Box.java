@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 public class Box implements IBox{
     private ArrayList<Candies> candies=new ArrayList<>();
@@ -12,18 +14,16 @@ public class Box implements IBox{
         candies.remove(candies.size()-1);
 
     }
-
     @Override
     public void deleteCandyByIndex(Integer index) {
         candies.remove(index);
 
     }
-
     @Override
     public int getWeight() {
         int result=0;
         for (Candies sweets:candies
-             ) {
+        ) {
             result+=sweets.getWeight();
         }
         return result;
@@ -48,35 +48,70 @@ public class Box implements IBox{
         }
         return result.toString();
     }
-    void optimizedByPrice(double bound){
-        if ( getPrice()<bound ){
-            return;
+    @Override
+    public double getAllPrice() {
+        int totalPrice = 0;
+        for (Candies de : candies) {
+            totalPrice += de.getPrice();
         }
-        while ((candies.size()>0)||(getPrice()>bound)){
-            Candies temp = candies.get(0);
-            for (Candies de:candies
-                 ) {
-                if (de.getPrice()<temp.getPrice()){
-                    temp=de;
+        return totalPrice;
+    }
+        @Override
+        public int getAllWeight() {
+            int totalWeight = 0;
+            for (Candies temp: candies) {
+                totalWeight += temp.getWeight();
+            }
+            return totalWeight;
+        }
+    @Override
+    public void reducePrice(double price) {
+        int count = 0;
+        double min = Double.MAX_VALUE;
+        Candies minSweet = null;
+        while (getAllPrice()>price) {
+            for (Candies se : candies
+            ) {
+                if (se.getPrice()<min) {
+                    min = se.getPrice();
+
+                    minSweet = se;
                 }
             }
-            candies.remove(temp);
+            System.out.println("min price sweetness in gift: " + min);
+            candies.remove(minSweet);
+            min = Double.MAX_VALUE;
+            if (minSweet != null) {
+                System.out.println("sweetness removed: "+minSweet.getName());
+            }
+            count++;
         }
+        System.out.println("Gift optimization completed successfully. removed  "+count+" sweets");
+
     }
-    void optimizedByWeight(double bound) {
-        if (getWeight() < bound) {
-            return;
-        }
-        while ((candies.size() > 0) || (getWeight() > bound)) {
-            Candies temp = candies.get(0);
+    @Override
+    public void reduceWeight(double weight) {
+        int count = 0;
+        double min = Double.MAX_VALUE;
+        Candies minSweet = null;
+        while (getAllWeight()>weight) {
             for (Candies de : candies
             ) {
-                if (de.getWeight() < temp.getWeight()) {
-                    temp = de;
+                if (de.getWeight()<min) {
+                    min = de.getWeight();
+
+                    minSweet = de;
                 }
             }
-            candies.remove(temp);
+            System.out.println("min weight sweetness in gift: " + min);
+            candies.remove(minSweet);
+            min = Double.MAX_VALUE;
+            if (minSweet != null) {
+                System.out.println("sweetness removed: "+minSweet.getName());
+            }
+            count++;
         }
-    }
 
+        System.out.println("Gift optimization completed successfully. removed  "+count+" sweets");
+    }
 }
