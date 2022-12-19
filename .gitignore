@@ -1,7 +1,6 @@
 #IDEA Files
 .idea
 target
-*.iml
 *.ipr
 build
 schema
